@@ -1,0 +1,4 @@
+gimeo-cgi/upload/*
+!gimeo-cgi/upload/.placeholder
+!gimeo-cgi/create.mysql
+!gimeo-cgi/create.sqlite3

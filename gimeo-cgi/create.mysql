@@ -1,0 +1,20 @@
+drop table if exists gifs;
+create table gifs (
+       id     integer primary key auto_increment,
+       sid    varchar(12) not null,
+       title  varchar(64) default "",
+       stat   int default 1,
+       timestamp datetime default CURRENT_TIMESTAMP
+);
+
+drop table if exists comments;
+create table comments (
+       id     integer primary key auto_increment,
+       gif_id integer,
+       comment text default "",
+       timestamp datetime default CURRENT_TIMESTAMP,
+       foreign key(gif_id) references gifs(id)
+);
+
+
+
