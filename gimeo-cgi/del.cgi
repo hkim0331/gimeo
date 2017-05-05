@@ -23,7 +23,7 @@ def list()
       comments << " " << c[:comment]
     end
     print <<EOL
-<li><a class='btn btn-danger' href="/cgi/del.cgi?cmd=del?id=#{r[:id]}">del</a>
+<li><a class='btn btn-danger' href="/cgi/del.cgi?cmd=del&id=#{r[:id]}">del</a>
 <a href="/upload/#{name}">#{r[:title]}</a>#{comments}</li>
 EOL
   end
@@ -31,13 +31,16 @@ EOL
 end
 
 def del(id)
-  DB[:gifs].where(id: id).update(stat: false)
+  DB[:gifs].where(id: id).update(stat: false,
+                                 timestamp: Time.now.strftim("%F %T"))
 end
 
+# FIXME
 def auth?()
   true
 end
 
+# FIXME
 def auth()
 
 end
