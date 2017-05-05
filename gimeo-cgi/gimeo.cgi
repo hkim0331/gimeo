@@ -42,10 +42,11 @@ def list()
       comments << " " << c[:comment]
     end
     print <<EOL
-<li><a href='/cgi/gimeo.cgi?cmd=comment&c=#{r[:id]}'>
+<li><a href="/upload/#{name}">#{r[:title]}</a>
+#{comments}
+<a href='/cgi/gimeo.cgi?cmd=comment&c=#{r[:id]}'>
 <img src="/good.png"></a>
-<a href="/upload/#{name}">#{r[:title]}</a>
-#{comments}</li>
+</li>
 EOL
   end
   puts "</ol>"
