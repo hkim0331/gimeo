@@ -42,7 +42,7 @@ def list()
       comments << " " << c[:comment]
     end
     print <<EOL
-<li><a href="/upload/#{name}">#{r[:title]}</a>
+<li><a class='btn btn-default' href="/upload/#{name}">#{r[:title]}</a>
 #{comments}
 <a href='/cgi/gimeo.cgi?cmd=comment&c=#{r[:id]}'>
 <img src="/good.png"></a>
@@ -58,6 +58,7 @@ def upload(cgi)
   sid = cgi['sid'].read
   raise "学生番号を入力してください。" if sid.empty?
   title = cgi['title'].read
+  raise "タイトルが空です。" if title.empty?
   now = Time.now.strftime("%F %T")
   id = DB[:gifs].insert(sid: sid, title: title, timestamp: now)
   upload = "#{UPLOAD}/#{id}.gif"
