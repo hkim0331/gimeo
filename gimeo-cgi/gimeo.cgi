@@ -5,7 +5,7 @@ require 'sequel'
 
 # production
 UPLOAD = "/srv/gimeo/public/upload"
-DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo')
+DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo")
 
 #development
 #UPLOAD = "./upload"
@@ -15,22 +15,20 @@ DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt
 def index()
   print <<EOF
 <ul>
-<li><a href="./gimeo.cgi?cmd=list">見る</a></li>
+
+<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">見る</a></li>
 
 <li>アップロード
-<div style='border:dotted 1pt; padding:10px;'>
-<form method='post' enctype='multipart/form-data'>
-<table>
-<tr>
-<td>gif ファイル</td>
-<td><input name="file" type="file"></td>
-</tr>
-<tr><td>学生番号</td><td><input name="sid"></td></tr>
-<tr><td>タイトル</td><td><input name="title"></td></tr>
-</table>
-<p><input type="submit" value="アップロード"></p>
+
+<form method='post' enctype='multipart/form-data'
+  style='border:dotted 1pt; padding:10px;'>
+<p>gif ファイル <input class='btn' name="file" type="file"></p>
+<p>学生番号 <input name="sid"></p>
+<p>タイトル <input name="title"></p>
+<p><input class='btn btn-primary' type="submit" value="アップロード"></p>
 </form>
-</div></li>
+</li>
+
 </ul>
 EOF
 end
