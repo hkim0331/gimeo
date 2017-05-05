@@ -37,12 +37,14 @@ def list()
   puts "<ol>"
   DB[:gifs].where(stat: true).each do |r|
     name = "#{r[:id]}.gif"
+    # shorten title?
+    title = r[:title]
     comments=""
     DB[:comments].where(gif_id: r[:id]).each do |c|
       comments << " " << c[:comment]
     end
     print <<EOL
-<li><a class='btn btn-default' href="/upload/#{name}">#{r[:title]}</a>
+<li><a class='btn btn-default' href="/upload/#{name}">#{title}</a>
 #{comments}
 <a href='/cgi/gimeo.cgi?cmd=comment&c=#{r[:id]}'>
 <img src="/good.png"></a>
@@ -136,7 +138,7 @@ begin
 rescue
   print <<EOR
 <p style='color:red;'>#{$!}</p>
-<p><a href="/cgi/gimeo.cgi">try again</a></p>
+<p>やり直すにはブラウザの「戻る」ボタンで</p>
 EOR
 ensure
   print <<EOF
