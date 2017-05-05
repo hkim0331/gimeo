@@ -32,7 +32,7 @@ end
 
 def del(id)
   DB[:gifs].where(id: id).update(stat: false,
-                                 timestamp: Time.now.strftim("%F %T"))
+                                 timestamp: Time.now.strftime("%F %T"))
 end
 
 # FIXME
