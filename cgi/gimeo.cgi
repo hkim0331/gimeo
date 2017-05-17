@@ -1,22 +1,25 @@
-#!/usr/bin/ruby
+#!/usr/local/bin/ruby
 # coding: utf-8
 require 'cgi'
 require 'sequel'
 
 # production
-UPLOAD = "/srv/gimeo/public/upload"
-DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo")
+#UPLOAD = "/srv/gimeo/public/upload"
+#DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo")
 
 #development
-#UPLOAD = "./upload"
-#DB = Sequel.sqlite("gimeo.db")
-#
+UPLOAD = "../upload"
+DB = Sequel.sqlite("../gimeo.db")
 
 def index()
   print <<EOF
 <ul>
 
-<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">見る</a></li>
+<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">見る</a>
+<ul>
+<li><a href="./gimeo.cgi?cmd=list&by=univ">大学別</a></li>
+<li><a href="./gimeo.cgi?cmd=list&by=user">学生番号別</a></li>
+</ul></li>
 
 <li>アップロード
 
@@ -33,9 +36,19 @@ def index()
 EOF
 end
 
-def list()
+def list(by)
+  puts "by:#{by}"
+  case by
+  when /univ/
+  when /sid/
+  else
+    list_aux(DB[:gifs].where(stat: true).reverse(:id))
+  end
+end
+
+def list_aux(ret)
   puts "<ol>"
-  DB[:gifs].where(stat: true).reverse(:id).each do |r|
+  ret.each do |r|
     name = "#{r[:id]}.gif"
     # shorten title?
     title = r[:title]
@@ -96,7 +109,9 @@ def do_comment(cgi)
                        timestamp: Time.now.strftime("%F %T"))
 end
 
+#
 # main
+#
 cgi = CGI.new
 print <<EOH
 content-type: text/html
@@ -122,7 +137,7 @@ begin
 
   if cgi.request_method =~ /GET/
     if cgi['cmd'] == "list"
-      list()
+      list(cgi['by'])
     elsif cgi['cmd'] == "comment"
       comment(cgi['c'])
     else
