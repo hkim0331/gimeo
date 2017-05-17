@@ -15,6 +15,3 @@ create table comments (
        timestamp datetime default CURRENT_TIMESTAMP,
        foreign key(gif_id) references gifs(id)
 );
-
-
-
