@@ -1,8 +1,11 @@
+SERVER = gimeo.melt.kyutech.ac.jp
+USER = ubuntu
+
 DB = gimeo.db
 
 install:
-	install gimeo.cgi del.cgi -m 0755 /srv/gimeo/cgi/
-	install public.html -m 0644 /srv/gimeo/public/index.html
+	rsync -avu gimeo.cgi del.cgi ${USER}@${SERVER}:/srv/gimeo/cgi/
+	rsync -avu public.html ${USER}@${SERVER}:/srv/gimeo/public/index.html
 
 create:
 	sqlite3 ${DB} < create.sql

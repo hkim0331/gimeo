@@ -16,7 +16,7 @@ DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt
 
 def list()
   puts "<ol>"
-  DB[:gifs].where(stat: true).each do |r|
+  DB[:gifs].where(stat: true).reverse(:id) each do |r|
     name = "#{r[:id]}.gif"
     comments=""
     DB[:comments].where(gif_id: r[:id]).each do |c|

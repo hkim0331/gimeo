@@ -35,7 +35,7 @@ end
 
 def list()
   puts "<ol>"
-  DB[:gifs].where(stat: true).each do |r|
+  DB[:gifs].where(stat: true).reverse(:id).each do |r|
     name = "#{r[:id]}.gif"
     # shorten title?
     title = r[:title]
