@@ -1,15 +1,15 @@
-#!/usr/local/bin/ruby
+#!/usr/bin/ruby
 # coding: utf-8
 require 'cgi'
 require 'sequel'
 
 # production
-#UPLOAD = "/srv/gimeo/public/upload"
-#DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo")
+UPLOAD = "/srv/gimeo/public/upload"
+DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo")
 
 #development
-UPLOAD = "../upload"
-DB = Sequel.sqlite("../gimeo.db")
+#UPLOAD = "../upload"
+#DB = Sequel.sqlite("../gimeo.db")
 
 def index()
   print <<EOF
@@ -18,7 +18,7 @@ def index()
 <li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">見る</a>
 <ul>
 <li><a href="./gimeo.cgi?cmd=list&by=sid">学生番号別</a></li>
-<li><a href="./gimeo.cgi?cmd=list&by=univ">大学別</a></li>
+<li><a href="./gimeo.cgi?cmd=list&by=univ">大学別</a>(under construction)</li>
 </ul></li>
 
 <li>アップロード
@@ -74,7 +74,6 @@ EOA
 end
 
 def list_all()
-  puts "all"
   puts "<ol>"
   DB[:gifs].where(stat: true).each do |r|
 #    gif = "#{r[:id]}.gif"
@@ -189,7 +188,7 @@ ensure
 <a href="/cgi/gimeo.cgi">back</a>
 </p>
 <hr>
-hkimura, 0.4
+hkimura, 0.5, 2017-05-17.
 </div>
 </body>
 EOF
