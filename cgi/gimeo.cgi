@@ -17,8 +17,8 @@ def index()
 
 <li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">見る</a>
 <ul>
+<li><a href="./gimeo.cgi?cmd=list&by=sid">学生番号別</a></li>
 <li><a href="./gimeo.cgi?cmd=list&by=univ">大学別</a></li>
-<li><a href="./gimeo.cgi?cmd=list&by=user">学生番号別</a></li>
 </ul></li>
 
 <li>アップロード
@@ -37,27 +37,54 @@ EOF
 end
 
 def list(by)
-  puts "by:#{by}"
   case by
-  when /univ/
   when /sid/
+    list_by_sid()
+  when /univ/
   else
-    list_aux(DB[:gifs].where(stat: true).reverse(:id))
+    list_all()
   end
 end
 
-def list_aux(ret)
+def encode(sid)
+  sid.gsub(/./,"*")
+end
+
+def list_by_sid()
+  works = Hash.new()
+  DB[:gifs].where(stat: true).each do |r|
+    if works[r[:sid]].nil?
+      works[r[:sid]] = [r[:id]]
+    else
+      works[r[:sid]].push(r[:id])
+    end
+  end
+
+  puts "<ul>"
+  works.keys.sort.each do |sid|
+    print "<li>#{encode(sid)}: "
+    works[sid].each do |w|
+      print <<EOA
+<a href="/upload/#{w}.gif">#{w}</a>,
+EOA
+    end
+    puts "</li>"
+  end
+  puts "</ul>"
+end
+
+def list_all()
+  puts "all"
   puts "<ol>"
-  ret.each do |r|
-    name = "#{r[:id]}.gif"
-    # shorten title?
-    title = r[:title]
-    comments=""
+  DB[:gifs].where(stat: true).each do |r|
+#    gif = "#{r[:id]}.gif"
+#    title = r[:title]
+    comments = ""
     DB[:comments].where(gif_id: r[:id]).each do |c|
       comments << " " << c[:comment]
     end
     print <<EOL
-<li><a class='btn btn-default' href="/upload/#{name}">#{title}</a>
+<li><a class='btn btn-default' href="/upload/#{r[:id]}.gif">#{r[:title]}</a>
 #{comments}
 <a href='/cgi/gimeo.cgi?cmd=comment&c=#{r[:id]}'>
 <img src="/good.png"></a>

@@ -1,0 +1,28 @@
+<VirtualHost *:80>
+        ServerName gimeo.melt.kyutech.ac.jp
+        DocumentRoot /srv/gimeo/public
+
+        ErrorLog ${APACHE_LOG_DIR}/gimeo_error.log
+        CustomLog ${APACHE_LOG_DIR}/gimeo_access.log combined
+
+        <Directory "/srv/gimeo/public">
+                AllowOverride All
+                Options -MultiViews -ExecCGI
+                require all granted
+        </Directory>
+
+        addHandler cgi-script .cgi
+        ScriptAlias /cgi/       /srv/gimeo/cgi/
+
+        <Directory "/srv/gimeo/cgi">
+                # must be changed
+                SetEnv GIMEO_USER user
+                SetEnv GIMEO_PASS pass
+                #
+                AllowOverride None
+                SetEnv GIMEO_PASS apple
+                Options +ExecCGI -MultiViews +SymlinksIfOwnerMatch
+                require all granted
+        </Directory>
+
+</VirtualHost>
