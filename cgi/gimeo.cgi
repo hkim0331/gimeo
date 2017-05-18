@@ -189,7 +189,7 @@ ensure
 <a href="/cgi/gimeo.cgi">back</a>
 </p>
 <hr>
-hkimura, 0.5, 2017-05-17.
+hkimura, 0.5.1, 2017-05-18.
 </div>
 </body>
 EOF
