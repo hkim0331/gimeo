@@ -1,29 +1,29 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 # coding: utf-8
 require 'cgi'
 require 'sequel'
 
-# production
-UPLOAD = "/srv/gimeo/public/upload"
-DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo")
-
-#development
-#UPLOAD = "../upload"
-#DB = Sequel.sqlite("../gimeo.db")
+if File.exists?("/srv/gimeo")
+  UPLOAD = "/srv/gimeo/public/upload"
+  DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo")
+else
+  UPLOAD = "../upload"
+  DB = Sequel.sqlite("../gimeo.db")
+end
 
 def index()
   print <<EOF
 <ul>
 
-<li>見る
+<h4>見る</h4>
 
-<ul>
-<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">アップロード順</a></li>
-<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list&by=sid">学生番号別</a></li>
-<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list&by=univ">大学別</a> (under construction)</li>
-</ul></li>
+<div class="group">
+<p><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">アップロード順</a></p>
+<p><a class='btn btn-primary' href="./gimeo.cgi?cmd=list&by=sid">学生番号順</a></p>
+<p><a class='btn btn-primary' href="./gimeo.cgi?cmd=list&by=univ">大学別</a>(under construction)</p>
+</div>
 
-<li>アップロード
+<h4>アップロード</h4>
 
 <form method='post' enctype='multipart/form-data'
   style='border:dotted 1pt; padding:10px;'>
@@ -32,9 +32,6 @@ def index()
 <p>タイトル <input name="title"></p>
 <p><input class='btn btn-primary' type="submit" value="アップロード"></p>
 </form>
-</li>
-
-</ul>
 EOF
 end
 
@@ -151,8 +148,12 @@ content-type: text/html
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title>index</title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style type="text/css">
+    code {white-space: pre;}
+    .group {border:dotted 1pt; padding:10px;}
+  </style>
+  <link rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body><div class="container">
 EOH
