@@ -15,10 +15,12 @@ def index()
   print <<EOF
 <ul>
 
-<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">見る</a>
+<li>見る
+
 <ul>
-<li><a href="./gimeo.cgi?cmd=list&by=sid">学生番号別</a></li>
-<li><a href="./gimeo.cgi?cmd=list&by=univ">大学別</a>(under construction)</li>
+<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">アップロード順</a></li>
+<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list&by=sid">学生番号別</a></li>
+<li><a class='btn btn-primary' href="./gimeo.cgi?cmd=list&by=univ">大学別</a> (under construction)</li>
 </ul></li>
 
 <li>アップロード
@@ -76,8 +78,6 @@ end
 def list_all()
   puts "<ol>"
   DB[:gifs].where(stat: true).each do |r|
-#    gif = "#{r[:id]}.gif"
-#    title = r[:title]
     comments = ""
     DB[:comments].where(gif_id: r[:id]).each do |c|
       comments << " " << c[:comment]
