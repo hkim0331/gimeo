@@ -18,9 +18,9 @@ def index()
 <h4>見る</h4>
 
 <div class="group">
-<p><a class='btn btn-primary' href="./gimeo.cgi?cmd=list">アップロード順</a></p>
-<p><a class='btn btn-primary' href="./gimeo.cgi?cmd=list&by=sid">学生番号順</a></p>
-<p><a class='btn btn-primary' href="./gimeo.cgi?cmd=list&by=univ">大学別</a>(under construction)</p>
+<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list">アップロード順</a></p>
+<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=sid">学生番号順</a></p>
+<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=univ">大学別</a>(under construction)</p>
 </div>
 
 <h4>アップロード</h4>
@@ -51,12 +51,14 @@ end
 
 def list_by_sid()
   works = Hash.new()
+  titles = Array.new
   DB[:gifs].where(stat: true).each do |r|
     if works[r[:sid]].nil?
       works[r[:sid]] = [r[:id]]
     else
       works[r[:sid]].push(r[:id])
     end
+    titles[r[:id]] = r[:title]
   end
 
   puts "<ul>"
@@ -64,7 +66,7 @@ def list_by_sid()
     print "<li>#{encode(sid)}: "
     works[sid].each do |w|
       print <<EOA
-<a href="/upload/#{w}.gif">#{w}</a>,
+<a href="/upload/#{w}.gif" class="btn btn-default">#{titles[w]}</a>&nbsp;
 EOA
     end
     puts "</li>"
@@ -130,6 +132,7 @@ end
 def do_comment(cgi)
   DB[:comments].insert(gif_id: cgi['c'], comment: cgi['comment'],
                        timestamp: Time.now.strftime("%F %T"))
+#  puts '"<p><a href="/cgi/gimeo.cgi?cmd=list">見る</a></p>'
 end
 
 #
