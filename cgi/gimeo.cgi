@@ -75,6 +75,7 @@ EOA
 end
 
 def list_all()
+  puts "<p>go to <a href='#tail'>bottom</a> of this page</p>"
   puts "<ol>"
   DB[:gifs].where(stat: true).each do |r|
     comments = ""
@@ -89,6 +90,7 @@ def list_all()
 </li>
 EOL
   end
+  puts "<a name='tail'>&nbsp;</a>"
   puts "</ol>"
 end
 
