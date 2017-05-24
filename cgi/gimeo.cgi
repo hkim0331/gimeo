@@ -8,18 +8,17 @@ def index()
   print <<EOF
 <ul>
 
-<h4>見る</h4>
 
-<div class="group">
+<div class='dotted'>
+<h4>見る</h4>
 <p><a class='btn btn-success' href="./gimeo.cgi?cmd=list">アップロード順</a></p>
 <p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=sid">学生番号順</a></p>
 <p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=univ">大学別</a>(under construction)</p>
 </div>
-
-<h4>アップロード</h4>
-
+<p></p>
 <form method='post' enctype='multipart/form-data'
-  style='border:dotted 1pt; padding:10px;'>
+  class='dotted'>
+<h4>アップロード</h4>
 <p>gif ファイル <input class='btn' name="file" type="file"></p>
 <p>学生番号 <input name="sid"></p>
 <p>タイトル <input name="title"></p>
@@ -92,7 +91,7 @@ def upload(cgi)
   raise "アップロードするのは gif ファイルです。" unless original_filename =~/\.gif$/
   sid = cgi['sid'].read
   raise "学生番号を入力してください。" if sid.empty?
-  raise "学生番号を確認してください。" unless sid =~ /\d{6}/
+  raise "学生番号を確認してください。#{sid}?" unless sid =~ /^\d{6,8}$/
   title = cgi['title'].read
   raise "タイトルが空です。" if title.empty?
   now = Time.now.strftime("%F %T")
@@ -165,7 +164,7 @@ ensure
 <a href="/cgi/gimeo.cgi">back</a>
 </p>
 <hr>
-hkimura, 0.5.3, 2017-05-24.
+hkimura, 0.5.4, 2017-05-24.
 </div></body></html>
 EOF
 end

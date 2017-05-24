@@ -1,4 +1,4 @@
-#!/usr/local/bin/ruby
+#!/usr/bin/env ruby
 # coding: utf-8
 # under construction, 2017-05-05 15:52
 
@@ -7,6 +7,7 @@ require 'sequel'
 require './common'
 
 def list()
+  puts "<p>go to <a href='#bottom'>bottom</a> of this page.</p>"
   puts "<ol>"
   DB[:gifs].where(stat: true).each do |r|
     name = "#{r[:id]}.gif"
@@ -20,6 +21,7 @@ def list()
 EOL
   end
   puts "</ol>"
+  puts "<a name='bottom'>&nbsp;</a>"
 end
 
 def del(id)
@@ -50,18 +52,20 @@ begin
   else
     auth()
   end
+
 rescue
   print <<EOR
 <p style='color:red;'>#{$!}</p>
 <p><a href="/cgi/gimeo.cgi">try again</a></p>
 EOR
+
 ensure
   print <<EOF
 <p>
 <a href="/cgi/gimeo.cgi">back</a>
 </p>
 <hr>
-hkimura, 0.5.3, 2017-05-24.
+hkimura, 0.5.4, 2017-05-24.
 </div></body></html>
 EOF
 end

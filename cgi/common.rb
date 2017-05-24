@@ -18,7 +18,10 @@ content-type: text/html
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <title>index</title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+  code {white-space: pre;}
+  .dotted { border: dotted 1pt; padding: 10px;}
+  </style>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body><div class="container">
