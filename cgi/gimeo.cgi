@@ -1,15 +1,8 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby
 # coding: utf-8
 require 'cgi'
 require 'sequel'
-
-if File.exists?("/srv/gimeo")
-  UPLOAD = "/srv/gimeo/public/upload"
-  DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo")
-else
-  UPLOAD = "../upload"
-  DB = Sequel.sqlite("../gimeo.db")
-end
+require './common'
 
 def index()
   print <<EOF
@@ -141,32 +134,10 @@ end
 # main
 #
 cgi = CGI.new
-print <<EOH
-content-type: text/html
-
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title>index</title>
-  <style type="text/css">
-    code {white-space: pre;}
-    .group {border:dotted 1pt; padding:10px;}
-  </style>
-  <link rel="stylesheet"
-   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body><div class="container">
-EOH
-
+puts BOOTSTRAP
 puts "<h1>GIF AMINE</h1>"
 
 begin
-
   if cgi.request_method =~ /GET/
     if cgi['cmd'] == "list"
       list(cgi['by'])
@@ -195,7 +166,6 @@ ensure
 </p>
 <hr>
 hkimura, 0.5.1, 2017-05-18.
-</div>
-</body>
+</div></body></html>
 EOF
 end
