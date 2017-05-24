@@ -22,7 +22,9 @@ if [ -z ${SED} ]; then
     exit
 fi
 
-${SED} -i.bak "s/^hkimura,.*$/hkimura, ${VERSION}, ${TODAY}./" cgi/gimeo.cgi
+for i in "cgi/gimeo.cgi cgi/del.cgi"; do
+    ${SED} -i.bak "s/^hkimura,.*$/hkimura, ${VERSION}, ${TODAY}./" $i
+done
 
 # example of sed 'c' command.
 #${SED} -i.bak "/(defvar \*version\*/ c\
