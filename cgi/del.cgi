@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/local/bin/ruby
 # coding: utf-8
 # under construction, 2017-05-05 15:52
 

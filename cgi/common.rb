@@ -6,7 +6,7 @@ else
   DB = Sequel.sqlite("../gimeo.db")
 end
 
-BOOTSTAP =<<EOH
+BOOTSTRAP =<<EOH
 content-type: text/html
 
 <!DOCTYPE html>
