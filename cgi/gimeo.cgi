@@ -8,12 +8,11 @@ def index()
   print <<EOF
 <ul>
 
-
 <div class='dotted'>
 <h4>見る</h4>
 <p><a class='btn btn-success' href="./gimeo.cgi?cmd=list">アップロード順</a></p>
 <p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=sid">学生番号順</a></p>
-<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=univ">大学別</a>(under construction)</p>
+<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=univ">大学別</a></p>
 </div>
 <p></p>
 <form method='post' enctype='multipart/form-data'
@@ -32,6 +31,7 @@ def list(by)
   when /sid/
     list_by_sid()
   when /univ/
+    list_by_univ()
   else
     list_all()
   end
@@ -39,6 +39,22 @@ end
 
 def encode(sid)
   sid.gsub(/./,"*")
+end
+
+def list_by_univ()
+  list_by_univ_aux("東筑紫短大", 173000, 174000)
+  list_by_univ_aux("下関市立大", 150000, 170000)
+  list_by_univ_aux("九工大", 14000000, 18000000)
+end
+
+def list_by_univ_aux(univ, low, high)
+  puts "<h3>#{univ}</h3>"
+  DB[:gifs].where(:sid => low..high, stat: true).each do |w|
+    print <<EOA
+<a href="/upload/#{w[:id]}.gif" class="btn btn-default">
+#{w[:title]}</a>&nbsp;
+EOA
+  end
 end
 
 def list_by_sid()
@@ -52,7 +68,6 @@ def list_by_sid()
     end
     titles[r[:id]] = r[:title]
   end
-
   puts "<ul>"
   works.keys.sort.each do |sid|
     print "<li>#{encode(sid)}: "
