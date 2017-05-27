@@ -10,11 +10,17 @@ def index()
 
 <div class='dotted'>
 <h4>見る</h4>
-<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list">アップロード順</a></p>
-<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=sid">学生番号順</a></p>
-<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=univ">大学別</a></p>
+
+<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list">
+      アップロード順</a></p>
+<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=sid">
+      学生番号順</a>
+<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=univ">
+      大学別</a></p>
 </div>
+
 <p></p>
+
 <form method='post' enctype='multipart/form-data'
   class='dotted'>
 <h4>アップロード</h4>
