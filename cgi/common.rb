@@ -1,6 +1,6 @@
 if File.exists?("/srv/gimeo/public/upload")
   UPLOAD = "/srv/gimeo/public/upload"
-  DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@dbs.melt.kyutech.ac.jp/gimeo")
+  DB = Sequel.connect("mysql2://#{ENV['GIMEO_USER']}:#{ENV['GIMEO_PASS']}@db.melt.kyutech.ac.jp/gimeo")
 else
   UPLOAD = "./upload"
   DB = Sequel.sqlite("../gimeo.db")
@@ -22,7 +22,7 @@ content-type: text/html
   code {white-space: pre;}
   .dotted { border: dotted 1pt; padding: 10px;}
   </style>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 </head>
 <body><div class="container">
 EOH
