@@ -21,12 +21,12 @@ def index()
 
 <p></p>
 
-<form method='post' enctype='multipart/form-data'
-  class='dotted'>
+<form method='post' enctype='multipart/form-data' class='dotted'>
 <h4>アップロード</h4>
 <p>gif ファイル <input class='btn' name="file" type="file"></p>
 <p>学生番号 <input name="sid"></p>
 <p>タイトル <input name="title"></p>
+<p>合言葉は <input name="secret"></p>
 <p><input class='btn btn-primary' type="submit" value="アップロード"></p>
 </form>
 EOF
@@ -108,6 +108,7 @@ EOL
 end
 
 def upload(cgi)
+  raise "合言葉忘れたな！" unless cgi['secret'] =~ /love/
   original_filename = cgi['file'].original_filename
   raise "アップロードするのは gif ファイルです。" unless original_filename =~/\.gif$/
   sid = cgi['sid'].read
@@ -181,11 +182,8 @@ rescue
 EOR
 ensure
   print <<EOF
-<p>
-<a href="/cgi/gimeo.cgi">back</a>
-</p>
 <hr>
-hkimura, 0.5.4, 2017-05-24.
+hkimura, 0.6, 2017-05-24, 2018-04-22.
 </div></body></html>
 EOF
 end
