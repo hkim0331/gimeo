@@ -22,7 +22,7 @@ if [ -z ${SED} ]; then
     exit
 fi
 
-for i in "cgi/gimeo.cgi cgi/del.cgi"; do
+for i in "cgi/gimeo.cgi cgi/gimeo-del.cgi"; do
     ${SED} -i.bak "s/^hkimura,.*$/hkimura, ${VERSION}, ${TODAY}./" $i
 done
 

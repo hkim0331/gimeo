@@ -183,7 +183,7 @@ EOR
 ensure
   print <<EOF
 <hr>
-hkimura, 0.6, 2017-05-24, 2018-04-22.
+hkimura, 0.6, 2018-04-22.
 </div></body></html>
 EOF
 end
