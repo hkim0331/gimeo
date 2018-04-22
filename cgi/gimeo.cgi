@@ -1,4 +1,4 @@
-#!/usr/local/var/rbenv/shims/ruby
+#!/usr/bin/env ruby
 # coding: utf-8
 require 'cgi'
 require 'sequel'
