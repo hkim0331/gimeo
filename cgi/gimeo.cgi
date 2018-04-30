@@ -6,30 +6,18 @@ require './common'
 
 def index()
   print <<EOF
-<ul>
-
-<div class='dotted'>
-<h4>見る</h4>
-
-<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list">
-      アップロード順</a></p>
-<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=sid">
-      学生番号順</a>
-<p><a class='btn btn-success' href="./gimeo.cgi?cmd=list&by=univ">
-      大学別</a></p>
-</div>
-
-<p></p>
-
-<form method='post' enctype='multipart/form-data' class='dotted'>
 <h4>アップロード</h4>
-<p>gif ファイル <input class='btn' name="file" type="file"></p>
-<p>学生番号 <input name="sid"></p>
-<p>タイトル <input name="title"></p>
-<p>合言葉は <input name="secret"></p>
-<p><input class='btn btn-primary' type="submit" value="アップロード"></p>
-</form>
+  <form method='post' enctype='multipart/form-data' class='dotted'>
+  <p>gif ファイル <input class='btn' name="file" type="file"></p>
+  <p>学生番号 <input name="sid"></p>
+  <p>タイトル <input name="title"></p>
+  <p>合言葉は <input name="secret" type="password"></p>
+  <p><input class='btn btn-primary' type="submit" value="アップロード"></p>
+  </form>
+  <p></p>
+<h4>見る</h4>
 EOF
+  list_all()
 end
 
 def list(by)
@@ -88,7 +76,6 @@ EOA
 end
 
 def list_all()
-  puts "<p>go to <a href='#tail'>bottom</a> of this page</p>"
   puts "<ol>"
   DB[:gifs].where(stat: true).each do |r|
     comments = ""
@@ -113,7 +100,7 @@ def upload(cgi)
   raise "アップロードするのは gif ファイルです。" unless original_filename =~/\.gif$/
   sid = cgi['sid'].read
   raise "学生番号を入力してください。" if sid.empty?
-//  raise "学生番号を確認してください。#{sid}?" unless sid =~ /^\d{6,8}$/
+#  raise "学生番号を確認してください。#{sid}?" unless sid =~ /^\d{6,8}$/
   title = cgi['title'].read
   raise "タイトルが空です。" if title.empty?
   now = Time.now.strftime("%F %T")
@@ -127,7 +114,7 @@ def upload(cgi)
   end
   print <<EOM
 <p>アップロードできました。</p>
-<p>見てみる？ &rArr; <a href="/cgi/gimeo.cgi?cmd=list">見る</a></p>
+<p><a href="/cgi/gimeo.cgi?cmd=list">見る</a></p>
 EOM
 end
 
@@ -148,7 +135,7 @@ end
 def do_comment(cgi)
   DB[:comments].insert(gif_id: cgi['c'], comment: cgi['comment'],
                        timestamp: Time.now.strftime("%F %T"))
-#  puts '"<p><a href="/cgi/gimeo.cgi?cmd=list">見る</a></p>'
+  puts '"<p><a href="/cgi/gimeo.cgi?cmd=list">見る</a></p>'
 end
 
 #
@@ -183,7 +170,7 @@ EOR
 ensure
   print <<EOF
 <hr>
-hkimura, 0.6, 2018-04-22.
+hkimura, 0.7, 2018-04-30.
 </div></body></html>
 EOF
 end
