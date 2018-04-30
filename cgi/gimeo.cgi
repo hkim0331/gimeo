@@ -113,7 +113,7 @@ def upload(cgi)
   raise "アップロードするのは gif ファイルです。" unless original_filename =~/\.gif$/
   sid = cgi['sid'].read
   raise "学生番号を入力してください。" if sid.empty?
-  raise "学生番号を確認してください。#{sid}?" unless sid =~ /^\d{6,8}$/
+//  raise "学生番号を確認してください。#{sid}?" unless sid =~ /^\d{6,8}$/
   title = cgi['title'].read
   raise "タイトルが空です。" if title.empty?
   now = Time.now.strftime("%F %T")
