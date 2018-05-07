@@ -1,3 +1,17 @@
+# 毎回の作業はめんどくさい
+
+gimeo のフォルダから、一発、
+
+gimeo-make --server g2018.melt.kyutech.ac.jp
+
+でサイトができるようにしたいぞ。
+
+* 0.7.1 2018-05-02
+
+  DB[:gifs].where(stat: true).order(Sequel.desc(:id)).each do |r|
+
+  end
+
 # gimeo2
 
 gimeo を残して、データベースだけ、切り替える。

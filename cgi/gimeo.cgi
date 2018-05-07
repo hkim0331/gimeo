@@ -10,7 +10,7 @@ def index()
   <form method='post' enctype='multipart/form-data' class='dotted'>
   <p>gif ファイル <input class='btn' name="file" type="file"></p>
   <p>学生番号 <input name="sid"></p>
-  <p>タイトル <input name="title"></p>
+  <p>タイトル <input name="title"> 30 文字以内</p>
   <p>合言葉は <input name="secret" type="password"></p>
   <p><input class='btn btn-primary' type="submit" value="アップロード"></p>
   </form>
@@ -77,7 +77,7 @@ end
 
 def list_all()
   puts "<ol>"
-  DB[:gifs].where(stat: true).each do |r|
+  DB[:gifs].where(stat: true).order(Sequel.desc(:id)).each do |r|
     comments = ""
     DB[:comments].where(gif_id: r[:id]).each do |c|
       comments << " " << c[:comment]
@@ -103,6 +103,7 @@ def upload(cgi)
 #  raise "学生番号を確認してください。#{sid}?" unless sid =~ /^\d{6,8}$/
   title = cgi['title'].read
   raise "タイトルが空です。" if title.empty?
+  raise "タイトルが長すぎます。" if title.length > 32
   now = Time.now.strftime("%F %T")
   id = DB[:gifs].insert(sid: sid, title: title, timestamp: now)
   upload = "#{UPLOAD}/#{id}.gif"
@@ -114,7 +115,7 @@ def upload(cgi)
   end
   print <<EOM
 <p>アップロードできました。</p>
-<p><a href="/cgi/gimeo.cgi?cmd=list">見る</a></p>
+<p><a href="/cgi/gimeo.cgi">見る</a></p>
 EOM
 end
 
@@ -124,7 +125,7 @@ def comment(n)
 <div style='border:dotted 1pt; padding:10px;'>
 <form method='post'>
 <input type='hidden' name='cmd' value='do'>
-<input type='hidden' name='c' value='#{n}'>
+<input type='hidden' name='c' value='#{n}'> 40 文字以内
 <p><input name="comment">
 <input type="submit" value="送信"></p>
 </form>
@@ -133,6 +134,7 @@ EOF
 end
 
 def do_comment(cgi)
+  raise "コメントは40文字以内で" if cgi['comment'].length > 40
   DB[:comments].insert(gif_id: cgi['c'], comment: cgi['comment'],
                        timestamp: Time.now.strftime("%F %T"))
   puts '"<p><a href="/cgi/gimeo.cgi?cmd=list">見る</a></p>'
@@ -170,7 +172,7 @@ EOR
 ensure
   print <<EOF
 <hr>
-hkimura, 0.7, 2018-04-30.
+hkimura, 0.7.1, 2018-05-02.
 </div></body></html>
 EOF
 end

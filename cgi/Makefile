@@ -1,3 +1,4 @@
+# 2018 setting
 USER   = hkim
 SERVER = g2.melt.kyutech.ac.jp
 DB     = g2.db
@@ -7,3 +8,6 @@ install:
 
 create:
 	sqlite3 ${DB} < create.sql
+
+clean:
+	${RM} *.bak
