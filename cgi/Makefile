@@ -1,6 +1,7 @@
 # 2018 setting
 USER   = hkim
-SERVER = g2.melt.kyutech.ac.jp
+#SERVER = g2.melt.kyutech.ac.jp
+SERVER = g.hkim.jp
 DB     = g2.db
 
 install:
